@@ -1,0 +1,35 @@
+informatii despre cum functioneaza algoritmul
+
+fieldurile pe care trebuie sa le afiseze
+- tipul stagiului: standard sau scenariu
+
+- pentru standard, limited sau unlimited
+
+- pentru standard, daca ai sau nu ai conceal
+
+- conditia armei
+    - loaded
+        -chamber empty or not
+    - unloaded
+        -where are the mags, on shooter or pickup
+    - pozitia armei, holster, low ready, se ia de undeva (pe masa, din pupitru, etc)
+- capacitatea primului incarcator
+    - pentru standard, capacitatea celorlalte incarcatoare
+
+- pozitia corpului (in picioare, sta pe ceva, etc)
+- pozitia mainilor - pe langa corp, surrender, etc
+
+- pentru fiecare tinta, tipul de tinta (intreaga, partiala, acoperita de NT, etc).
+- numarul de focuri per target (1 poate fi diferita)
+- optional cum trebuie angajate tintele? (body, cap etc)
+- swinger/popper, etc si cum se activeaza (daca este steel sau nu)
+
+- draw - normal, cu pivot (clock), cu cover, etc
+
+- numarul de puncte de cover, cu tot cu pozitia de intrare (clock)
+- pentru standard tests, nu sunt covers, dar pot fi mai multe POC
+- pentru fiecare linie de fault - dificultatea
+- pentru fiecare PoC numarul de tinte
+
+
+

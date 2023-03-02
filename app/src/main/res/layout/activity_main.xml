@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TableLayout
+                android:id="@+id/stageTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+<!--            stage type-->
+                <TableRow>
+
+                    <TextView
+                        android:text="Type: " />
+                    <TextView
+                        android:id="@+id/stageType" />
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Rounds: " />
+                    <TextView
+                        android:id="@+id/roundsStructure"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Concealment: " />
+                    <TextView
+                        android:id="@+id/concealmentRequired"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Gun Condition: " />
+                    <TextView
+                        android:id="@+id/gunCondition"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Mags Condition: " />
+                    <TextView
+                        android:id="@+id/magsCondition"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Start Position: " />
+                    <TextView
+                        android:id="@+id/startPosition"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Draw: " />
+                    <TextView
+                        android:id="@+id/draw"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Shots/Target: " />
+                    <TextView
+                        android:id="@+id/shots"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Special Target: " />
+                    <TextView
+                        android:id="@+id/shotsSpecial"/>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:text="SP: " />
+                    <TextView
+                        android:id="@+id/sp"/>
+                </TableRow>
+
+            </TableLayout>
+            </HorizontalScrollView>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/gen_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:text="Generate Stage"
+            android:onClick="generateNewStage"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
