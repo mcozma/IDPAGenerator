@@ -13,36 +13,43 @@ class PointOfContact {
     var targets = mutableListOf<Target>()
 
     companion object {
-        fun generateSp(shots: Shots, specialTarget: Boolean, onlySp: Boolean): PointOfContact {
-            var poc = PointOfContact()
+        fun generateSp(shots: Shots, specialTarget: Boolean, allInTheOpen: Boolean): PointOfContact {
+            val poc = PointOfContact()
             poc.faultLineDifficulty = FaultLineDifficulty.values().toList().shuffled().first()
 
-            //max 6 shots in the open
-            var availableShots = 6;
-            if(specialTarget){
-                poc.targetCount = 1;
-                availableShots -= shots.extraTargetShots
-            }
-            var maxRemainingTargets = availableShots / shots.shotsPerTarget
-            if(onlySp && !specialTarget)
-                poc.targetCount += (1..maxRemainingTargets).random()
-            else
+            if(allInTheOpen) {
+                poc.targetCount = shots.availableTargetsCount
+            } else {
+                //max 6 shots in the open
+                var availableShotsInTheOpen = 6
+                if (specialTarget) {
+                    poc.targetCount = 1
+                    availableShotsInTheOpen -= shots.extraTargetShotsPerTarget
+                }
+                var maxRemainingTargets = availableShotsInTheOpen / shots.shotsPerTarget
+                if (maxRemainingTargets > shots.availableTargetsCount)
+                    maxRemainingTargets = shots.availableTargetsCount
                 poc.targetCount += (0..maxRemainingTargets).random()
-
+                shots.availableTargetsCount -= poc.targetCount
+            }
             for(i in 1..poc.targetCount) {
-                poc.targets.add(Target.generateTarget(specialTarget && i == 1))
+                poc.targets.add(Target.generateTarget())
             }
             return poc
         }
-        fun generatePoc(specialTarget: Boolean): PointOfContact {
-            var poc = PointOfContact()
+        fun generatePoc(shots: Shots): PointOfContact {
+            val poc = PointOfContact()
             poc.entryDirection = nextInt(1, 12)
             poc.faultLineDifficulty = FaultLineDifficulty.values().toList().shuffled().first()
 
-            poc.targetCount = nextInt(1, 3)
+            if(shots.availableTargetsCount > 1)
+                poc.targetCount = nextInt(1, shots.availableTargetsCount)
+            else
+                poc.targetCount = 1
+            shots.availableTargetsCount -= poc.targetCount
 
             for(i in 1..poc.targetCount) {
-                poc.targets.add(Target.generateTarget(specialTarget && i == 1))
+                poc.targets.add(Target.generateTarget())
             }
             return poc
         }

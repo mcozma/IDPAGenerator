@@ -1,6 +1,5 @@
 package com.example.idpagenerator
 
-import android.graphics.Point
 import kotlin.random.Random.Default.nextBoolean
 import kotlin.random.Random.Default.nextInt
 
@@ -41,30 +40,43 @@ class Stage {
         draw.generateDraw()
         //shots
         shots.generateShots()
-        //poc count
-        generatePocCount()
-        if(shots.extraTargetRule){
-            specialTargetPoC = (0..pocCount).random()
+        val allInTheOpen = nextInt(1, 10) == 1
+        if(allInTheOpen){
+            sp = PointOfContact.generateSp(shots, true, true)
+            if (shots.extraTargetRule) {
+                specialTargetPoC = 0
+            }
+        } else {
+            if (shots.extraTargetRule) {
+                if(nextInt(1, 5) == 1)
+                    specialTargetPoC = 0
+            }
+            sp = PointOfContact.generateSp(shots, specialTargetPoC == 0, false)
+            while (shots.availableTargetsCount > 0) {
+                pointsOfContact.add(PointOfContact.generatePoc(shots))
+                pocCount++
+                if (shots.extraTargetRule && specialTargetPoC == -1) {
+                    if (nextInt(1, 6) > 6 - pocCount)
+                        specialTargetPoC = pocCount
+                }
+            }
+            //if still no special target, assign it to the last poc
+            if (shots.extraTargetRule && specialTargetPoC == -1)
+                if(pocCount > 0)
+                    specialTargetPoC = pocCount
+                else
+                    specialTargetPoC = 0
         }
-        sp = PointOfContact.generateSp(shots, specialTargetPoC == 0, pocCount == 0)
-        for(i in 1..pocCount) {
-            pointsOfContact.add(PointOfContact.generatePoc(specialTargetPoC == i))
-        }
+
+        //count total targets and shots
         totalTargets += sp.targetCount
         for(poc in pointsOfContact)
             totalTargets += poc.targetCount
         totalShots = shots.shotsPerTarget * totalTargets
         if(shots.extraTargetRule)
-            totalShots += shots.extraTargetShots - shots.shotsPerTarget
+            totalShots += shots.extraTargetShotsPerTarget - shots.shotsPerTarget
 
         //gun condition
-        gunCondition.generateGunCondition(stageType, totalShots)
-    }
-
-    private fun generatePocCount() {
-        if(nextInt(100) > 10) pocCount++
-        if(pocCount == 1 && nextInt(100) > 30) pocCount++;
-        if(pocCount == 2 && nextInt(100) > 70) pocCount++;
-        if(pocCount == 3 && nextInt(100) > 90) pocCount++;
+        gunCondition.generateGunCondition(stageType,roundsStructure, totalShots)
     }
 }

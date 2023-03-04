@@ -14,8 +14,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
     fun generateNewStage(view: View) {
-        val stage = Stage();
-        stage.generate();
+        val stage = Stage()
+        stage.generate()
 
         //stage type
         var textView: TextView = findViewById(R.id.stageType)
@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         else
             textView.text = "No"
 
+        var textBuild = ""
         //gun condition
         textView = findViewById(R.id.gunCondition)
-        var textBuild = ""
         if (stage.gunCondition.loaded) {
             textBuild = "Loaded, "
             if (stage.gunCondition.chamberEmpty)
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         textBuild = ""
         for (load in stage.gunCondition.magLoading) {
             if (load == stage.gunCondition.maxRounds)
-                textBuild += "Div cap"
+                textBuild += "DivCap"
             else
                 textBuild += load.toString()
             textBuild += ", "
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         //special target
         textView = findViewById(R.id.shotsSpecial)
         if (stage.shots.extraTargetRule) {
-            textBuild = stage.shots.extraTargetShots.toString() + " shots"
+            textBuild = stage.shots.extraTargetShotsPerTarget.toString() + " shots"
             if (!stage.shots.extraTargetAnywhere) {
                 textBuild += ", " + stage.shots.extraTargetBody.toString() + " to the body, " + stage.shots.extraTargetHead.toString() + " to the head"
             }
@@ -102,9 +102,8 @@ class MainActivity : AppCompatActivity() {
 
         //sp
         textView = findViewById(R.id.sp)
-        textBuild = "Enter  " + stage.sp.entryDirection.toString() + " o'clock"
         if (stage.sp.targetCount > 0) {
-            textBuild += ", " + stage.sp.targetCount.toString() + " targets"
+            textBuild = stage.sp.targetCount.toString() + " targets"
             if(stage.specialTargetPoC == 0)
                 textBuild += ", Special Target"
             textBuild += "\n"
@@ -116,11 +115,13 @@ class MainActivity : AppCompatActivity() {
                     textBuild += ", activated by " + target.targetActivator.toString()
                 textBuild += "\n"
             }
+        } else {
+            textBuild = "No targets"
         }
         textView.text = textBuild
 
         //clear reviews PoCs
-        var tableLayout: TableLayout = findViewById(R.id.stageTable)
+        val tableLayout: TableLayout = findViewById(R.id.stageTable)
         if(listOfTableRows.isNotEmpty()){
             for(row in listOfTableRows){
                 tableLayout.removeView(row)
@@ -130,8 +131,8 @@ class MainActivity : AppCompatActivity() {
 
         //add all Pocs
         for (poc in stage.pointsOfContact) {
-            var rowLabel = TextView(this)
-            var index = stage.pointsOfContact.indexOf(poc) + 1
+            val rowLabel = TextView(this)
+            val index = stage.pointsOfContact.indexOf(poc) + 1
             rowLabel.text = "PoC " + index + ": "
 
             textBuild = "Enter " + poc.entryDirection.toString() + " o'clock, " + poc.faultLineDifficulty.toString() + " difficulty, "
@@ -147,10 +148,10 @@ class MainActivity : AppCompatActivity() {
                     textBuild += ", activated by " + target.targetActivator.toString()
                 textBuild += "\n"
             }
-            var rowValue = TextView(this)
+            val rowValue = TextView(this)
             rowValue.text = textBuild
 
-            var newRow = TableRow(this)
+            val newRow = TableRow(this)
             newRow.addView(rowLabel)
             newRow.addView(rowValue)
             tableLayout.addView(newRow)

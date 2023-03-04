@@ -10,23 +10,21 @@ enum class TargetArea {
 }
 
 enum class TargetActivator {
-    NONE, TRAP, STEEL, DOOR, ROPE
+    TRAP, STEEL, DOOR, ROPE
 }
 
 class Target {
     var nonThreatInFront = false
     var targetArea = TargetArea.BLANK
     var hasActivator = false
-    var targetActivator = TargetActivator.NONE
+    var targetActivator = TargetActivator.STEEL
 
     companion object {
-        fun generateTarget(specialTarget: Boolean): Target {
-            var target = Target()
+        fun generateTarget(): Target {
+            val target = Target()
             target.nonThreatInFront = nextBoolean()
             if (!target.nonThreatInFront) {
                 target.targetArea = TargetArea.values().toList().shuffled().first()
-                if(specialTarget && target.targetArea == TargetArea.HEADONLY)
-                    target.targetArea = TargetArea.BLANK
             }
             if (nextInt(100) > 90) {
                 target.hasActivator = true

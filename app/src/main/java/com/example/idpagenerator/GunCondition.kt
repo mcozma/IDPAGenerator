@@ -8,17 +8,17 @@ enum class GunPosition {
 }
 
 class GunCondition() {
-    val maxRounds = 21;
+    val maxRounds = 21
     var chamberEmpty = false
     var loaded = true
     var holstered = GunPosition.HOLSTER
-    var pickupMags = false;
+    var pickupMags = false
     var magLoading = mutableListOf(maxRounds, maxRounds, maxRounds)
 
-    fun generateGunCondition(stageType: StageType, totalShots: Int) {
+    fun generateGunCondition(stageType: StageType, roundsStructure: RoundsStructure, totalShots: Int) {
         //loaded condition
         if(nextInt(100) > 80) {
-            loaded = false;
+            loaded = false
             pickupMags = nextBoolean()
         } else {
             chamberEmpty = nextBoolean()
@@ -29,14 +29,17 @@ class GunCondition() {
         }
         //mags
         if(stageType == StageType.STANDARD) {
-            var shotsPerMag = totalShots / 3
+            val shotsPerMag = totalShots / nextInt(2, 3)
             for(i in 0..2) {
                 magLoading[i] = shotsPerMag
             }
-            magLoading[2] += totalShots % 3
+            if(roundsStructure == RoundsStructure.LIMITED)
+                magLoading[2] += totalShots % 3
+            else
+                magLoading[2] = maxRounds
         }
         else if (nextBoolean()) {
-            magLoading[0] = nextInt(2, 10);
+            magLoading[0] = nextInt(2, 10)
         }
 
     }
